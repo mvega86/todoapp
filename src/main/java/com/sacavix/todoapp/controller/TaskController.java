@@ -4,6 +4,7 @@ import com.sacavix.todoapp.persistence.entity.Task;
 import com.sacavix.todoapp.persistence.entity.TaskStatus;
 import com.sacavix.todoapp.service.TaskService;
 import com.sacavix.todoapp.service.dto.TaskInDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,17 @@ public class TaskController {
     @GetMapping("/findAllByStatus/{status}")
     public List<Task> findAllByStatus(@PathVariable TaskStatus status){
         return this.taskService.findAllByStatus(status);
+    }
+
+    @PatchMapping("/markAsFinished/{id}")
+    public ResponseEntity<Void> markAsFinished(@PathVariable Long id){
+        this.taskService.markAsFinished(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        this.taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
     }
 }
